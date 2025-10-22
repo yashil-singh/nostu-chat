@@ -1,3 +1,4 @@
+import { ThemeToggler } from "@/components/theme-toggler";
 import Image from "next/image";
 
 export default function Home() {
@@ -59,6 +60,8 @@ export default function Home() {
             Documentation
           </a>
         </div>
+
+        <ThemeToggler />
       </main>
     </div>
   );
