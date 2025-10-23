@@ -43,11 +43,13 @@ function Button({
   size,
   asChild = false,
   isLoading = false,
+  loadingText,
   ...props
 }: React.ComponentProps<"button"> &
   VariantProps<typeof buttonVariants> & {
     asChild?: boolean;
     isLoading?: boolean;
+    loadingText?: string;
   }) {
   const Comp = asChild ? Slot : "button";
 
@@ -58,7 +60,14 @@ function Button({
       {...props}
       disabled={isLoading || props.disabled}
     >
-      {isLoading ? <Spinner /> : props.children}
+      {isLoading ? (
+        <>
+          <Spinner />
+          {loadingText}
+        </>
+      ) : (
+        props.children
+      )}
     </Comp>
   );
 }

@@ -1,5 +1,6 @@
 "use client";
 
+import { signup } from "@/lib/actions/auth/signup";
 import { Button } from "@/components/ui/button";
 import {
   Form,
@@ -11,7 +12,6 @@ import {
 import {
   InputGroup,
   InputGroupAddon,
-  InputGroupButton,
   InputGroupInput,
 } from "@/components/ui/input-group";
 import PasswordInput from "@/components/ui/password-input";
@@ -21,8 +21,10 @@ import {
   signupSchema,
 } from "@/lib/schemas/signupSchema";
 import { zodResolver } from "@hookform/resolvers/zod";
-import { AtSignIcon, EyeIcon, LockIcon, UserIcon } from "lucide-react";
+import { AtSignIcon, LockIcon, UserIcon } from "lucide-react";
+import { redirect } from "next/navigation";
 import { useForm } from "react-hook-form";
+import { toast } from "sonner";
 
 const SignupForm = () => {
   const form = useForm<SignupFormType>({
@@ -30,8 +32,14 @@ const SignupForm = () => {
     defaultValues: defaultSignupFormValues,
   });
 
-  const onSubmit = (data: SignupFormType) => {
-    console.log(data);
+  const onSubmit = async (data: SignupFormType) => {
+    const response = await signup(data);
+    if (response.success) {
+      toast.success(response.message);
+      redirect("/verify-email");
+    } else {
+      toast.error(response.message);
+    }
   };
 
   return (
@@ -132,6 +140,7 @@ const SignupForm = () => {
           className="w-full"
           type="submit"
           isLoading={form.formState.isSubmitting}
+          loadingText="Signing up"
         >
           Signup
         </Button>

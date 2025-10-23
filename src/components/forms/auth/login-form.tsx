@@ -12,19 +12,21 @@ import {
 import {
   InputGroup,
   InputGroupAddon,
-  InputGroupButton,
   InputGroupInput,
 } from "@/components/ui/input-group";
 import PasswordInput from "@/components/ui/password-input";
+import { login } from "@/lib/actions/auth/login";
 import {
   defaultLoginFormValues,
   LoginForm as LoginFormType,
   loginSchema,
 } from "@/lib/schemas/loginSchema";
 import { zodResolver } from "@hookform/resolvers/zod";
-import { AtSignIcon, EyeIcon, LockIcon } from "lucide-react";
+import { AtSignIcon, LockIcon } from "lucide-react";
 import Link from "next/link";
+import { redirect } from "next/navigation";
 import { useForm } from "react-hook-form";
+import { toast } from "sonner";
 
 const LoginForm = () => {
   const form = useForm<LoginFormType>({
@@ -32,8 +34,19 @@ const LoginForm = () => {
     defaultValues: defaultLoginFormValues,
   });
 
-  const onSubmit = (data: LoginFormType) => {
-    console.log(data);
+  const onSubmit = async (data: LoginFormType) => {
+    const response = await login(data);
+    if (response.success) {
+      toast.success(response.message);
+      redirect("/inbox");
+    } else {
+      if (response.status === 403) {
+        redirect(`/verify?email=${data.email}`);
+      } else {
+        toast.error(response.message);
+        form.setValue("password", "");
+      }
+    }
   };
 
   return (
@@ -92,6 +105,7 @@ const LoginForm = () => {
           className="w-full"
           type="submit"
           isLoading={form.formState.isSubmitting}
+          loadingText="Logging in"
         >
           Login
         </Button>
