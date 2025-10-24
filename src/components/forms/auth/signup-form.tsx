@@ -19,7 +19,7 @@ import {
   defaultSignupFormValues,
   SignupForm as SignupFormType,
   signupSchema,
-} from "@/lib/schemas/signupSchema";
+} from "@/lib/schemas/authSchemas/signupSchema";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { AtSignIcon, LockIcon, UserIcon } from "lucide-react";
 import { redirect } from "next/navigation";
@@ -36,7 +36,7 @@ const SignupForm = () => {
     const response = await signup(data);
     if (response.success) {
       toast.success(response.message);
-      redirect("/verify-email");
+      redirect(`/verify?email=${data.email}`);
     } else {
       toast.error(response.message);
     }

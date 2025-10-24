@@ -22,6 +22,7 @@ const PasswordInput = ({
           className="rounded-full"
           size="icon-xs"
           onClick={() => setIsVisible(!isVisible)}
+          tabIndex={-1}
         >
           {isVisible ? <EyeIcon /> : <EyeOffIcon />}
         </InputGroupButton>

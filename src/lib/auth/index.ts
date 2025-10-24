@@ -15,6 +15,25 @@ export const auth = betterAuth({
   emailAndPassword: {
     enabled: true,
     requireEmailVerification: true,
+    autoSignIn: true,
+    sendResetPassword: async ({ user, url, token }) => {
+      console.log("🚀 ~ index.ts:19 ~ token:", token);
+
+      console.log("🚀 ~ index.ts:19 ~ url:", url);
+
+      console.log("🚀 ~ index.ts:19 ~ user:", user);
+
+      // TODO: Send the reset password email to the user
+    },
+    onPasswordReset: async ({ user }) => {
+      console.log("🚀 ~ index.ts:28 ~ user:", user);
+
+      // TODO: Handle the password reset
+    },
+  },
+
+  emailVerification: {
+    autoSignInAfterVerification: true,
   },
 
   // social providers
@@ -39,6 +58,10 @@ export const auth = betterAuth({
         console.log("🚀 ~ index.ts:37 ~ otp:", otp);
 
         console.log("🚀 ~ index.ts:37 ~ email:", email);
+
+        if (type === "forget-password") {
+          // TODO: Send the forget password email to the user
+        }
 
         if (type === "email-verification") {
           // TODO: Send the verification code to the user's email

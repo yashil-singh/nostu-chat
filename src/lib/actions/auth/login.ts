@@ -1,7 +1,7 @@
 "use server";
 
 import { auth } from "@/lib/auth";
-import { LoginForm } from "@/lib/schemas/loginSchema";
+import { LoginForm } from "@/lib/schemas/authSchemas/loginSchema";
 
 export const login = async (data: LoginForm) => {
   try {

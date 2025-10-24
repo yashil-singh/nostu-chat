@@ -20,7 +20,7 @@ import {
   defaultLoginFormValues,
   LoginForm as LoginFormType,
   loginSchema,
-} from "@/lib/schemas/loginSchema";
+} from "@/lib/schemas/authSchemas/loginSchema";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { AtSignIcon, LockIcon } from "lucide-react";
 import Link from "next/link";

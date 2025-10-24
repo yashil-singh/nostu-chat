@@ -1,8 +1,10 @@
 import VerifyForm from "@/components/forms/auth/verify-form";
+import VerifyResendOtpTimer from "@/components/forms/auth/verify-resend-otp-timer";
 import {
   Card,
   CardContent,
   CardDescription,
+  CardFooter,
   CardHeader,
   CardTitle,
 } from "@/components/ui/card";
@@ -55,6 +57,9 @@ const VerifyEmailPage = async ({
         <CardContent className="space-y-6">
           <VerifyForm className="w-full" email={email} />
         </CardContent>
+        <CardFooter className="grid gap-6">
+          <VerifyResendOtpTimer email={email} />
+        </CardFooter>
       </Card>
     </div>
   );
